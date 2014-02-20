@@ -1,6 +1,8 @@
 
 # Files
 *.pyc
+*.swp
 
 # Directories
 usr/
+tools/

@@ -1,5 +1,8 @@
+
+
 #coding: utf-8
-from bottle import route, error, post, get, run, static_file, abort, redirect, response, request, template
+
+from defaults import *
  
 @route('/')
 @route('/index.html')
@@ -22,8 +25,7 @@ def serve_static(filename):
 @route('/raise_error')
 def raise_error():
     abort(404, "error...")
- 
-@route('/redirect')
+route('/redirect')
 def redirect_to_hello():
     redirect('/hello')
  
@@ -58,5 +60,5 @@ def do_upload():
 @route('/tpl')
 def tpl():
     return template('test')
- 
+
 run(host='localhost', port=8000, reloader=True)
