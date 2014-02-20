@@ -19,7 +19,7 @@ class Jinja(object):
         # Create the jinja2 environment.
         # Notice the use of trim_blocks, which greatly helps control whitespace.
 
-        j2_env = Environment(loader=FileSystemLoader(_templateLoc),
+        j2_env = Environment(loader=FileSystemLoader(os.path.join(THIS_DIR, _templateLoc)),
                              trim_blocks=True)
 
         template = j2_env.get_template(_template)

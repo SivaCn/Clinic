@@ -22,7 +22,7 @@ valid_user = bottlesession.authenticator(session_manager)
 @valid_user()
 def main():
     import pdb; pdb.set_trace()  # BREAKPOINT
-    return jinjaEngine.Jinja().renderTemplate(r'/templates', 'login.html')
+    return jinjaEngine.Jinja().renderTemplate(r'templates', 'login.html')
 
 @route('/login')
 def login():
