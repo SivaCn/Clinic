@@ -13,7 +13,7 @@ class Jinja(object):
         """
         pass
 
-    def renderTemplate(self, _templateLoc=r'/templates', _template='login.html'):
+    def renderTemplate(self, _templateLoc=r'/templates', _template='login.html', **kwargs):
         """
         """
         # Create the jinja2 environment.
@@ -24,4 +24,4 @@ class Jinja(object):
 
         template = j2_env.get_template(_template)
 
-        return template.render(title='Hellow Gist from GutHub')
+        return template.render(title='Hellow Gist from GutHub', **kwargs)

@@ -1,9 +1,12 @@
-%if error:
-   <fieldset><legend>Notice</legend>{{error}}</fieldset>
+%if message:
+   <fieldset><legend>Notice</legend>{{message}}</fieldset>
 %end
 
-<form method="POST" id="form" action="/login">
-   Login name: <input type="text" name="username" /><br/>
-   Password: <input type="password" name="password" /><br/>
-   <input type="submit" value="Login" name="submit" />
-</form>
+<fieldset>
+    <legend>Login Here</legend>
+    <form method="POST" id="form" action="/login">
+       Login name: <input type="text" name="username" /><br/>
+       Password: <input type="password" name="password" /><br/>
+       <input type="submit" value="Login" name="submit" />
+    </form>
+</fieldset>
