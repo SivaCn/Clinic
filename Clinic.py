@@ -126,7 +126,8 @@ def change_password():
 @bottle.route('/')
 def index():
     """Only authenticated users can see this"""
-    aaa.require(fail_redirect='/login')
+    #print xxx
+    #aaa.require(fail_redirect='/login')
     return 'Welcome! <a href="/admin">Admin page</a> <a href="/logout">Logout</a>'
 
 
