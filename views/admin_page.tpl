@@ -1,6 +1,6 @@
 <html>
    <head>
-      <link rel="stylesheet" type="text/css" href="page_front.css">
+      <link rel="stylesheet" type="text/css" href="page_front.css"/>
    </head>
 <form>
   <body>

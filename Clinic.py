@@ -215,15 +215,24 @@ def login_form():
     """Serve login form"""
     return {}
 
-
 @bottle.route('/sorry_page')
 def sorry_page():
     """Serve sorry page"""
     return '<p>Sorry, you are not authorized to perform this action</p>'
 
+@bottle.get('/<filename:re:.*\.js>')
+def javascripts(filename):
+    return bottle.static_file(filename, root='static/js')
 
-# #  Web application main  # #
+@bottle.get('/<filename:re:.*\.css>')
+def stylesheets(filename):
+    return bottle.static_file(filename, root='static/css')
 
+@bottle.get('/<filename:re:.*\.(jpg|png|gif|ico)>')
+def images(filename):
+    return bottle.static_file(filename, root='static/images')
+
+##  Web application main  # #
 def main():
 
     # Start the Bottle webapp
