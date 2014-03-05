@@ -1,0 +1,87 @@
+
+
+USERS TABLE:
+------------
+CREATE TABLE USERS
+	(USER_ID INT NOT NULL AUTO_INCREMENT,
+	 UNAME VARCHAR(50) NOT NULL,
+	 ROLE VARCHAR(20) NOT NULL,
+	 HASH VARCHAR(256) NOT NULL,
+	 EMAIL VARCHAR(100),
+	 ACTIVE VARCHAR(1) NOT NULL,
+	 DESCRIPTION VARCHAR(150),
+	 CRT_DT DATETIME NOT NULL,
+	 UPD_DT DATETIME NOT NULL,
+	 LAST_LOGIN DATETIME,
+	 PRIMARY KEY (USER_ID)
+	 );
+
+
+mysql> desc USERS;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| USER_ID     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| UNAME       | varchar(50)  | NO   |     | NULL    |                |
+| ROLE        | varchar(20)  | NO   |     | NULL    |                |
+| HASH        | varchar(256) | NO   |     | NULL    |                |
+| EMAIL       | varchar(100) | YES  |     | NULL    |                |
+| ACTIVE      | varchar(1)   | NO   |     | NULL    |                |
+| DESCRIPTION | varchar(150) | YES  |     | NULL    |                |
+| CRT_DT      | datetime     | NO   |     | NULL    |                |
+| UPD_DT      | datetime     | NO   |     | NULL    |                |
+| LAST_LOGIN  | datetime     | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+10 rows in set (0.01 sec)
+
+
+ROLES TABLE:
+------------
+
+CREATE TABLE ROLES
+	(
+		ROLE VARCHAR(20) NOT NULL,
+		LEVEL INTEGER NOT NULL,
+		ACTIVE VARCHAR(1) NOT NULL,
+		CRT_DT DATETIME NOT NULL,
+		UPD_DT DATETIME NOT NULL
+	);
+
+
+mysql> DESC ROLES;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| ROLE   | varchar(20) | NO   |     | NULL    |       |
+| LEVEL  | int(11)     | NO   |     | NULL    |       |
+| ACTIVE | varchar(1)  | NO   |     | NULL    |       |
+| CRT_DT | datetime    | NO   |     | NULL    |       |
+| UPD_DT | datetime    | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+
+
+{
+	0: 		{
+			'attr': 'age',
+			'oper': '<',
+			'value': 40,
+			'pref': '',
+			'suffix': '|'
+			}
+
+
+}
+
+lt
+gt
+eq
+
+
+
+
+( & (self.users.c.age > 20) & (self.users.c.age < 40))
+
+
+
+

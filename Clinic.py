@@ -20,36 +20,36 @@ logging.basicConfig(format='localhost - - [%(asctime)s] %(message)s', level=logg
 log = logging.getLogger(__name__)
 bottle.debug(True)
 
-def populate_backend():
-    b = SQLiteBackend('example.db', initialize=True)
-    b.connection.executescript("""
-        INSERT INTO users (username, email_addr, desc, role, hash, creation_date) VALUES
-        (
-            'admin',
-            'admin@localhost.local',
-            'admin test user',
-            'admin',
-            'cLzRnzbEwehP6ZzTREh3A4MXJyNo+TV8Hs4//EEbPbiDoo+dmNg22f2RJC282aSwgyWv/O6s3h42qrA6iHx8yfw=',
-            '2012-10-28 20:50:26.286723'
-        );
-        INSERT INTO users (username, email_addr, desc, role, hash, creation_date) VALUES
-        (
-            'user',
-            'user@localhost.local',
-            'user',
-            'user',
-            'cLzRnzbEwehP6ZzTREh3A4MXJyNo+TV8Hs4//EEbPbiDoo+dmNg22f2RJC282aSwgyWv/O6s3h42qrA6iHx8yfw=',
-            '2012-10-28 20:50:26.286723'
-        );
-        INSERT INTO roles (role, level) VALUES ('special', 200);
-        INSERT INTO roles (role, level) VALUES ('admin', 100);
-        INSERT INTO roles (role, level) VALUES ('editor', 60);
-        INSERT INTO roles (role, level) VALUES ('user', 50);
-    """)
-    return b
-
-b = populate_backend()
-aaa = Cork(backend=b, email_sender='cnsiva.in@gmail.com', smtp_url='smtp.gmail.com')
+## def populate_backend():
+##     b = SQLiteBackend('example.db', initialize=True)
+##     b.connection.executescript("""
+##         INSERT INTO users (username, email_addr, desc, role, hash, creation_date) VALUES
+##         (
+##             'admin',
+##             'admin@localhost.local',
+##             'admin test user',
+##             'admin',
+##             'cLzRnzbEwehP6ZzTREh3A4MXJyNo+TV8Hs4//EEbPbiDoo+dmNg22f2RJC282aSwgyWv/O6s3h42qrA6iHx8yfw=',
+##             '2012-10-28 20:50:26.286723'
+##         );
+##         INSERT INTO users (username, email_addr, desc, role, hash, creation_date) VALUES
+##         (
+##             'user',
+##             'user@localhost.local',
+##             'user',
+##             'user',
+##             'cLzRnzbEwehP6ZzTREh3A4MXJyNo+TV8Hs4//EEbPbiDoo+dmNg22f2RJC282aSwgyWv/O6s3h42qrA6iHx8yfw=',
+##             '2012-10-28 20:50:26.286723'
+##         );
+##         INSERT INTO roles (role, level) VALUES ('special', 200);
+##         INSERT INTO roles (role, level) VALUES ('admin', 100);
+##         INSERT INTO roles (role, level) VALUES ('editor', 60);
+##         INSERT INTO roles (role, level) VALUES ('user', 50);
+##     """)
+##     return b
+## 
+## b = populate_backend()
+## aaa = Cork(backend=b, email_sender='cnsiva.in@gmail.com', smtp_url='smtp.gmail.com')
 
 
 
@@ -80,41 +80,42 @@ def login():
     """Authenticate users"""
     username = post_get('username')
     password = post_get('password')
-    aaa.login(username, password, success_redirect='/', fail_redirect='/login')
+    ##aaa.login(username, password, success_redirect='/', fail_redirect='/login')
 
 @bottle.route('/user_is_anonymous')
 def user_is_anonymous():
-    if aaa.user_is_anonymous:
-        return 'True'
+    ## if aaa.user_is_anonymous:
+    ##     return 'True'
 
     return 'False'
 
 @bottle.route('/logout')
 def logout():
-    aaa.logout(success_redirect='/login')
+    #aaa.logout(success_redirect='/login')
+    pass
 
 
 @bottle.post('/register')
 def register():
     """Send out registration email"""
-    aaa.register(post_get('username'), post_get('password'), post_get('email_address'))
+    ##aaa.register(post_get('username'), post_get('password'), post_get('email_address'))
     return 'Please check your mailbox.'
 
 
 @bottle.route('/validate_registration/:registration_code')
 def validate_registration(registration_code):
     """Validate registration, create user account"""
-    aaa.validate_registration(registration_code)
+    ## aaa.validate_registration(registration_code)
     return 'Thanks. <a href="/login">Go to login</a>'
 
 
 @bottle.post('/reset_password')
 def send_password_reset_email():
     """Send out password reset email"""
-    aaa.send_password_reset_email(
-        username=post_get('username'),
-        email_addr=post_get('email_address')
-    )
+    ##aaa.send_password_reset_email(
+    ##     username=post_get('username'),
+    ##     email_addr=post_get('email_address')
+    ## )
     return 'Please check your mailbox.'
 
 
@@ -128,7 +129,7 @@ def change_password(reset_code):
 @bottle.post('/change_password')
 def change_password():
     """Change password"""
-    aaa.reset_password(post_get('reset_code'), post_get('password'))
+    ## aaa.reset_password(post_get('reset_code'), post_get('password'))
     return 'Thanks. <a href="/login">Go to login</a>'
 
 
@@ -143,7 +144,7 @@ def index():
 @bottle.route('/restricted_download')
 def restricted_download():
     """Only authenticated users can download this file"""
-    aaa.require(fail_redirect='/login')
+    ##aaa.require(fail_redirect='/login')
     return bottle.static_file('static_file', root='.')
 
 
@@ -152,8 +153,8 @@ def show_current_user_role():
     """Show current user role"""
     session = bottle.request.environ.get('beaker.session')
     print "Session from simple_webapp", repr(session)
-    aaa.require(fail_redirect='/login')
-    return aaa.current_user.role
+    ##aaa.require(fail_redirect='/login')
+    return True #aaa.current_user.role
 
 
 # Admin-only pages
@@ -162,18 +163,19 @@ def show_current_user_role():
 @bottle.view('admin_page')
 def admin():
     """Only admin users can see this"""
-    aaa.require(role='admin', fail_redirect='/sorry_page')
-    return dict(
-        current_user=aaa.current_user,
-        users=aaa.list_users(),
-        roles=aaa.list_roles()
-    )
+    ## aaa.require(role='admin', fail_redirect='/sorry_page')
+    ## return dict(
+    ##     current_user=aaa.current_user,
+    ##     users=aaa.list_users(),
+    ##     roles=aaa.list_roles()
+    ## )
+    pass
 
 
 @bottle.post('/create_user')
 def create_user():
     try:
-        aaa.create_user(postd().username, postd().role, postd().password)
+        ##aaa.create_user(postd().username, postd().role, postd().password)
         return dict(ok=True, msg='')
     except Exception, e:
         return dict(ok=False, msg=e.message)
@@ -182,7 +184,7 @@ def create_user():
 @bottle.post('/delete_user')
 def delete_user():
     try:
-        aaa.delete_user(post_get('username'))
+        ##aaa.delete_user(post_get('username'))
         return dict(ok=True, msg='')
     except Exception, e:
         print repr(e)
@@ -192,7 +194,7 @@ def delete_user():
 @bottle.post('/create_role')
 def create_role():
     try:
-        aaa.create_role(post_get('role'), post_get('level'))
+        ##aaa.create_role(post_get('role'), post_get('level'))
         return dict(ok=True, msg='')
     except Exception, e:
         return dict(ok=False, msg=e.message)
@@ -201,7 +203,7 @@ def create_role():
 @bottle.post('/delete_role')
 def delete_role():
     try:
-        aaa.delete_role(post_get('role'))
+        ##aaa.delete_role(post_get('role'))
         return dict(ok=True, msg='')
     except Exception, e:
         return dict(ok=False, msg=e.message)
