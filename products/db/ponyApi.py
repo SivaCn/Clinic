@@ -153,6 +153,7 @@ class BaseDB(object):
             self.commit()
 
 
+import pdb; pdb.set_trace() # BREAKPOINT
 db.generate_mapping(create_tables=True)
 #db.generate_mapping()
 
@@ -165,3 +166,5 @@ _dict = {'user_id':4, 'uname':'AA', 'role':'SDF', 'passwd':'AAA', 'email':'SS@SS
 #BaseDB().update(Users, uname='YYYY', _id=3)
 
 BaseDB().select(Users)
+import pdb; pdb.set_trace() # BREAKPOINT
+print ""
