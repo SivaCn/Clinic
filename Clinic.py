@@ -5,17 +5,30 @@
 
 import bottle
 
+from products.engine import Engine
+
  
 @bottle.route('/')
 @bottle.route('/index.html')
 def index():
     #return '<a href="/hello">Go to Hello World page</a>'
-    return bottle.template('first.html')
+    #return bottle.template('first.html', name='AAAAAAAAAA')
+    return bottle.redirect('/engine/patient')
  
 @bottle.route('/hello')
 def hello():
     return '<h1>HELLO WOLRD</h1>'
  
+@bottle.route('/engine/:subpage', method=['POST', 'GET'])
+def engine(subpage):
+    engine = Engine.Engine()
+    return engine(subpage)
+
+@bottle.route('/engine/post/:subpage', method=['POST', 'GET'])
+def engine(subpage):
+    engine = Engine.Engine()
+    return engine(subpage, fresh=False)
+
 @bottle.route('/hello/:name')
 def hello_name(name):
     page = bottle.request.GET.get('page', '1')

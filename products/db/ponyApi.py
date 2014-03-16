@@ -40,7 +40,7 @@ class Roles(db.Entity):
 class Patient(db.Entity):
     """Patient Schema.
     """
-    patient_id = Required(unicode)
+    #patient_id = Required(unicode)
     first_name = Required(unicode)
     middle_name = Optional(unicode)
     last_name = Optional(unicode)
@@ -58,6 +58,7 @@ class Patient(db.Entity):
     occupation = Required(unicode)
     religion = Required(unicode)
     country = Required(unicode)
+    notes = Required(unicode, 400)
     crt_dt = Required(unicode)
     upd_dt = Optional(unicode)
 
@@ -153,18 +154,18 @@ class BaseDB(object):
             self.commit()
 
 
-import pdb; pdb.set_trace() # BREAKPOINT
-db.generate_mapping(create_tables=True)
-#db.generate_mapping()
+if __name__ == '__main__':
+    """."""
+    db.generate_mapping(create_tables=True)
+    #db.generate_mapping()
 
-_dict = {'user_id':4, 'uname':'AA', 'role':'SDF', 'passwd':'AAA', 'email':'SS@SS.COM',
-         'active':'y', 'description':'desc', 'crt_dt':'DFSFDS', 'upd_dt':'DFSDF',
-         'last_login':'DSAFDS'}
- 
-#BaseDB().post(Users, **_dict)
+    _dict = {'user_id':4, 'uname':'AA', 'role':'SDF', 'passwd':'AAA', 'email':'SS@SS.COM',
+             'active':'y', 'description':'desc', 'crt_dt':'DFSFDS', 'upd_dt':'DFSDF',
+             'last_login':'DSAFDS'}
+     
+    #BaseDB().post(Users, **_dict)
 
-#BaseDB().update(Users, uname='YYYY', _id=3)
+    #BaseDB().update(Users, uname='YYYY', _id=3)
 
-BaseDB().select(Users)
-import pdb; pdb.set_trace() # BREAKPOINT
-print ""
+    BaseDB().select(Users)
+    print ""

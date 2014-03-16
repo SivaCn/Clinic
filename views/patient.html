@@ -5,13 +5,13 @@
 	<meta name="description" content="Your description goes here" />
 	<meta name="keywords" content="your,keywords,goes,here" />
 	<meta name="author" content="Your Name" />
-	<link rel="stylesheet" type="text/css" href="variant-classic.css" title="Variant Classic" media="screen,projection" />
+	<link rel="stylesheet" type="text/css" href="/variant-classic.css" title="Variant Classic" media="screen,projection" />
 	<title>Ayurvedic Clinic</title>
 	
-  <link rel="stylesheet" href="jquery-ui.css">
-  <script src="jquery-1.9.1.js"></script>
-  <script src="jquery-ui.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/jquery-ui.css">
+  <script src="/jquery-1.9.1.js"></script>
+  <script src="/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/style.css">
   <script>
   $(function() {
     $( "#datepicker" ).datepicker();
@@ -32,7 +32,7 @@
 
 	<div id="mainmenu">
 		<ul>
-			<li class="current_page_item"><a href="index.html">Patient</a></li>
+			<li class="current_page_item"><a href="#">Patient</a></li>
 			<li><a href="styles.html">Medical</a></li>
 			<li><a href="layouts.html">Alternate layout</a></li>
 			<li><a href="empty.html">Empty page</a></li>
@@ -43,9 +43,9 @@
 
 <div id="wrap"><div class="inner">
 
-<form name="patient" action="/engine/patient" method="post">
+<form name="patient" action="/engine/post/patient" method="post">
 	<div id="content">
-		<h2>Patient Intake</h2>
+		<h2>Patient Portal [{{ patient_id }}]</h2>
         <br>
 		<div class="clearfix">
 			<table border=0>
@@ -60,33 +60,33 @@
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>First Name</td>
-									<td><input type="text" name="patient_first_name" id="patient_first_name" value=""></input></td>
+									<td><input type="text" name="fname" id="fname" value="{{ fname }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Middle Name</td>
-									<td><input type="text" name="patient_middle_name" id="patient_middle_name" value=""></input></td>
+									<td><input type="text" name="mname" id="mname" value="{{ mname }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Last Name</td>
-									<td><input type="text" name="patient_last_name" id="patient_last_name" value=""></input></td>
+									<td><input type="text" name="lname" id="lname" value="{{ lname }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Address</td>
-									<td><textarea name="patient_first_name" id="patient_first_name" cols="22" rows="3" style="resize: none;"   ></textarea></td>
+									<td><textarea name="address" id="address" cols="22" rows="3" style="resize: none;"   >{{ address }}</textarea></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>DOB and Age</td>
 									<td>
-										<input type="text" id="datepicker" size=14>
-										<input type="text" name="patient_first_name" id="patient_first_name" size="3" value=""></input>
+										<input type="text" id="datepicker" size=14 value="{{ dob }}">
+										<input type="text" name="age" id="age" size="3" value="{{ age }}"></input>
 									</td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
@@ -94,10 +94,10 @@
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Gender</td>
 									<td>
-										<select name="patient_first_name" id="patient_first_name" value="">
+										<select name="gender" id="gender">
 											<option>--Select--</option>
-											<option>Male</option>
-											<option>Female</option>
+											<option value="Male">Male</option>
+											<option value="Female" >Female</option>
 										</select>
 									</td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -105,26 +105,26 @@
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Religion</td>
-									<td><input type="text" name="patient_middle_name" id="patient_middle_name" value=""></input></td>
+									<td><input type="text" name="religion" id="religion" value="{{ religion }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Country</td>
-									<td><input type="text" name="patient_middle_name" id="patient_middle_name" value=""></input></td>
+									<td><input type="text" name="country" id="country" value="{{ country }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Occupation</td>
-									<td><input type="text" name="patient_middle_name" id="patient_middle_name" value=""></input></td>
+									<td><input type="text" name="occupation" id="occupation" value="{{ occupation }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Maritial Status</td>
 									<td>
-										<select name="patient_first_name" id="patient_first_name" value="">
+										<select name="maritial_status" id="maritial_status">
 											<option>-- Select --</option>
 											<option>Single</option>
 											<option>Married</option>
@@ -143,36 +143,36 @@
 							<table border=0 cellspacing="10">
 								<tr>
 									<td colspan=2>&nbsp;</td>
-									<td colspan=2><img src="rss.png" height=150 width=111/></td>
+									<td colspan=2><img src="" height=150 width=111/></td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>E-Mail</td>
-									<td><input type="text" name="patient_first_name" id="patient_first_name" value=""></input></td>
+									<td><input type="text" name="email" id="email" value="{{ email }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Mobile</td>
-									<td><input type="text" name="patient_middle_name" id="patient_middle_name" value=""></input></td>
+									<td><input type="text" name="mobile" id="mobile" value="{{ mobile }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Telephone</td>
-									<td><input type="text" name="patient_last_name" id="patient_last_name" value=""></input></td>
+									<td><input type="text" name="telephone" id="telephone" value="{{ telephone }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Guardian Name</td>
-									<td><input type="text" name="patient_last_name" id="patient_last_name" value=""></input></td>
+									<td><input type="text" name="gname" id="gname" value="{{ gname }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>Guardian Phone</td>
-									<td><input type="text" name="patient_last_name" id="patient_last_name" value=""></input></td>
+									<td><input type="text" name="gphone" id="gphone" value="{{ gphone }}"></input></td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 								</tr>
 								<tr>
@@ -190,7 +190,7 @@
 							<table width=100% border=0 cellspacing="10">
 								<tr>
 									<td>
-										<textarea name="patient_first_name" id="patient_first_name" cols="100" rows="5" style="resize: none;"   ></textarea>
+										<textarea name="notes" id="notes" cols="100" rows="5" style="resize: none;">{{ notes }}</textarea>
 									</td>
 								</tr>
 							</table>
@@ -198,7 +198,7 @@
 					</td>
 				</tr>
 			</table>
-			
+
 		    <p align=center><br><br>
 		        <input type="submit" name="Save" value="Save"></input>
 		        <input type="button" name="Reset" value="Reset"></input>
@@ -207,21 +207,21 @@
 		<br><br>
 
 	</div>
-
+</form>
 	<div id="sidebar">
-	<p><img src="sample-logo.jpg" alt="Sample sidebar logo" height="100%" width="100%" /></p>
+	<p><img src="/sample-logo.jpg" alt="Sample sidebar logo" height="100%" width="100%" /></p>
 
 		<fieldset><legend>&nbsp;&nbsp;SEARCH FOR PATIENTS&nbsp;&nbsp;</legend>
 			<div class="left">
 				<table width=100% border=0 cellspacing="5">
 				<tr>
 					<td>
-						<input type="text" name="patient_last_name" id="patient_last_name" size=20 value="Patient Name(any)"></input>
+						<input type="text" name="search_by_patient_name" id="search_by_patient_name" size=20 value="Patient Name(any)"></input>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="text" name="patient_last_name" id="patient_last_name" size=20 value="Patient ID"></input>
+						<input type="text" name="search_by_patient_id" id="search_by_patient_id" size=20 value="Patient ID"></input>
 					</td>
 				</tr>
 			</table>
@@ -231,12 +231,12 @@
 				<table width=100% border=0 cellspacing="5">
 					<tr>
 						<td>
-							<input type="text" name="patient_last_name" id="patient_last_name" size=17 value="E Mail"></input>
+							<input type="text" name="search_by_email" id="search_by_email" size=17 value="E Mail"></input>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="patient_last_name" id="patient_last_name" size=17 value="Guardian Name"></input>
+							<input type="text" name="search_by_gname" id="search_by_gname" size=17 value="Guardian Name"></input>
 						</td>
 					</tr>
 					<tr>
@@ -257,8 +257,8 @@
 	</div>
 </div>
 <br class="clear" />
+
 </div>
-</form>
 
 <div id="footer"><div class="inner">
 	<p><span class="credits">&copy; 2010 Your Name / <a href="#">Site title</a> | <a href="#">Sample footer link 1</a> | <a href="#">Sample footer link 2</a></span><br />
