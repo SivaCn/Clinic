@@ -40,18 +40,19 @@ class Roles(db.Entity):
 class Patient(db.Entity):
     """Patient Schema.
     """
-    #patient_id = Required(unicode)
+    id = PrimaryKey(int, auto=True)
     first_name = Required(unicode)
     middle_name = Optional(unicode)
     last_name = Optional(unicode)
     address = Required(unicode)
-    mobile_list = Required(unicode)
-    telephone_list = Optional(unicode)
+    mobile = Required(unicode)
+    telephone = Optional(unicode)
     age = Required(int)
     gender = Required(unicode)
     dob = Required(unicode)  # time.ctime(time.time()) stripped format only date
     active = Required(unicode, 1)
     email = Optional(unicode)
+    photo = Optional(unicode)
     guardian_name = Optional(unicode)
     guardian_con_no = Optional(unicode)
     maritial_status = Required(unicode)
@@ -98,6 +99,8 @@ class Images(db.Entity):
 class BaseDB(object):
     """
     """
+    db.generate_mapping()
+
     @db_session
     def commit(self):
         """Commit on Demand.
@@ -125,13 +128,10 @@ class BaseDB(object):
         pass
 
     @db_session
-    def insert(self, table_cls, auto_commit=False, **kwargs):
+    def insert(self, table_cls, **kwargs):
         """Insert a new record to the specified Table.
         """
         obj = table_cls(**kwargs)
-
-        if auto_commit:
-            self.commit()
 
     @db_session
     def deactivate(self, table_cls, _id, auto_commit=False):
@@ -140,6 +140,12 @@ class BaseDB(object):
         table_cls.get(id=_id).set(active='N')
         if auto_commit:
             self.commit()
+
+    @db_session
+    def select_by_sql(self, table_cls, query):
+        """Execute plain SQL against DB..
+        """
+        return table_cls.select_by_sql(query)
 
     @db_session
     def update(self, table_cls, auto_commit=False, **kwargs):
@@ -163,7 +169,7 @@ if __name__ == '__main__':
              'active':'y', 'description':'desc', 'crt_dt':'DFSFDS', 'upd_dt':'DFSDF',
              'last_login':'DSAFDS'}
      
-    #BaseDB().post(Users, **_dict)
+    BaseDB().insert(Users, **_dict)
 
     #BaseDB().update(Users, uname='YYYY', _id=3)
 

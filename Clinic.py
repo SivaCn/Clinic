@@ -13,13 +13,18 @@ from products.engine import Engine
 def index():
     #return '<a href="/hello">Go to Hello World page</a>'
     #return bottle.template('first.html', name='AAAAAAAAAA')
-    return bottle.redirect('/engine/patient')
+    return bottle.redirect('/engine/fresh/patient')
  
 @bottle.route('/hello')
 def hello():
     return '<h1>HELLO WOLRD</h1>'
+
+@bottle.route('/engine/fresh/:subpage', method=['POST', 'GET'])
+def engine(subpage):
+    engine = Engine.Fresh()
+    return engine(subpage)
  
-@bottle.route('/engine/:subpage', method=['POST', 'GET'])
+@bottle.route('/engine/get/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     engine = Engine.Engine()
     return engine(subpage)
@@ -27,7 +32,7 @@ def engine(subpage):
 @bottle.route('/engine/post/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     engine = Engine.Engine()
-    return engine(subpage, fresh=False)
+    return engine(subpage, save=True)
 
 @bottle.route('/hello/:name')
 def hello_name(name):

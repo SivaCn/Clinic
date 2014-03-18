@@ -45,7 +45,7 @@
 
 <form name="patient" action="/engine/post/patient" method="post">
 	<div id="content">
-		<h2>Patient Portal [{{ patient_id }}]</h2>
+		<h2>Patient Portal {{ patient_id }}</h2>
         <br>
 		<div class="clearfix">
 			<table border=0>
@@ -85,7 +85,7 @@
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td>DOB and Age</td>
 									<td>
-										<input type="text" id="datepicker" size=14 value="{{ dob }}">
+										<input type="text" id="datepicker" size=14 name="dob" value="{{ dob }}">
 										<input type="text" name="age" id="age" size="3" value="{{ age }}"></input>
 									</td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
