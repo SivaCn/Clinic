@@ -99,7 +99,8 @@ class Images(db.Entity):
 class BaseDB(object):
     """
     """
-    db.generate_mapping()
+    if __name__ != 'ponyApi':
+        db.generate_mapping()
 
     @db_session
     def commit(self):
@@ -168,7 +169,7 @@ if __name__ == '__main__':
     _dict = {'user_id':4, 'uname':'AA', 'role':'SDF', 'passwd':'AAA', 'email':'SS@SS.COM',
              'active':'y', 'description':'desc', 'crt_dt':'DFSFDS', 'upd_dt':'DFSDF',
              'last_login':'DSAFDS'}
-     
+
     BaseDB().insert(Users, **_dict)
 
     #BaseDB().update(Users, uname='YYYY', _id=3)

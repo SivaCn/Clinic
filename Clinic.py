@@ -7,14 +7,14 @@ import bottle
 
 from products.engine import Engine
 
- 
+
 @bottle.route('/')
 @bottle.route('/index.html')
 def index():
     #return '<a href="/hello">Go to Hello World page</a>'
     #return bottle.template('first.html', name='AAAAAAAAAA')
     return bottle.redirect('/engine/fresh/patient')
- 
+
 @bottle.route('/hello')
 def hello():
     return '<h1>HELLO WOLRD</h1>'
@@ -23,7 +23,7 @@ def hello():
 def engine(subpage):
     engine = Engine.Fresh()
     return engine(subpage)
- 
+
 @bottle.route('/engine/get/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     engine = Engine.Engine()
@@ -34,31 +34,36 @@ def engine(subpage):
     engine = Engine.Engine()
     return engine(subpage, save=True)
 
+@bottle.route('/engine/search/:subpage', method=['POST', 'GET'])
+def engine(subpage):
+    search = Engine.Search()
+    return search(subpage)
+
 @bottle.route('/hello/:name')
 def hello_name(name):
     page = bottle.request.GET.get('page', '1')
     return '<h1>HELLO %s <br/>(%s)</h1>' % (name, page)
- 
+
 @bottle.route('/static/:filename')
 def serve_static(filename):
     return bottle.static_file(filename, root='/home/arthur/workspace/my_python_codes/src/')
- 
+
 @bottle.route('/raise_error')
 def raise_error():
     bottle.abort(404, "error...")
- 
+
 @bottle.route('/redirect')
 def redirect_to_hello():
     bottle.redirect('/hello')
- 
+
 @bottle.route('/ajax')
 def ajax_response():
     return {'dictionary': 'you will see ajax response right? Content-Type will be "application/json"'}
- 
+
 @bottle.error(404)
 def error404(error):
     return '404 error !!!!!'
- 
+
 @bottle.get('/upload')
 def upload_view():
     return """
@@ -67,8 +72,8 @@ def upload_view():
           <input type="file" name="data" />
           <input type="submit" name="submit" value="upload now" />
         </form>
-        """    
- 
+        """
+
 @bottle.post('/upload')
 def do_upload():
     name = bottle.request.forms.get('name')
@@ -78,11 +83,11 @@ def do_upload():
         filename = data.filename
         return "Hello %s! You uploaded %s (%d bytes)." % (name, filename, len(raw))
     return "You missed a field."
- 
+
 @bottle.route('/tpl')
 def tpl():
     return template('test')
- 
+
 # Static pages
 
 @bottle.route('/login')

@@ -143,7 +143,7 @@
 							<table border=0 cellspacing="10">
 								<tr>
 									<td colspan=2>&nbsp;</td>
-									<td colspan=2><img src="" height=150 width=111/></td>
+									<td colspan=2><img src="{{ photo_src }}" height=150 width=111/></td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -211,49 +211,49 @@
 	<div id="sidebar">
 	<p><img src="/sample-logo.jpg" alt="Sample sidebar logo" height="100%" width="100%" /></p>
 
-		<fieldset><legend>&nbsp;&nbsp;SEARCH FOR PATIENTS&nbsp;&nbsp;</legend>
-			<div class="left">
-				<table width=100% border=0 cellspacing="5">
-				<tr>
-					<td>
-						<input type="text" name="search_by_patient_name" id="search_by_patient_name" size=20 value="Patient Name(any)"></input>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="text" name="search_by_patient_id" id="search_by_patient_id" size=20 value="Patient ID"></input>
-					</td>
-				</tr>
-			</table>
-			</div>
-			
-			<div class="right">
-				<table width=100% border=0 cellspacing="5">
+		<form name="patient" action="/engine/search/patient" method="post">
+			<fieldset><legend>&nbsp;&nbsp;SEARCH FOR PATIENTS&nbsp;&nbsp;</legend>
+					<table width=100% border=0 cellspacing="5">
 					<tr>
 						<td>
-							<input type="text" name="search_by_email" id="search_by_email" size=17 value="E Mail"></input>
+							<input type="text" name="search_by_patient_name" id="search_by_patient_name" size=25 value="{{ search_by_patient_name }}"></input>
+						</td>
+						<td> OR</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="search_by_patient_id" id="search_by_patient_id" size=25 value="{{ search_by_patient_id }}"></input>
+						</td>
+						<td> OR</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="search_by_email" id="search_by_email" size=25 value="{{ search_by_email }}"></input>
+						</td>
+						<td> OR</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="search_by_gname" id="search_by_gname" size=25 value="{{ search_by_gname }}"></input>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="search_by_gname" id="search_by_gname" size=17 value="Guardian Name"></input>
+							&nbsp;
 						</td>
 					</tr>
 					<tr>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
 						<td>
-							<input type="submit" name="Search" value="Search"></input>
+							<p align="center"><input type="submit" name="Search" value="Search"></input></p>
 						</td>
 					</tr>
 				</table>
+			</fieldset>
+			<div id="sidebar">
+			<br><br>
+			{{ !search_result }}
 			</div>
-		</fieldset>
-		<br><br>
-		<fieldset><legend>&nbsp;&nbsp;FOUND PATIENTS&nbsp;&nbsp;</legend>
-		<br><br><br><br><br><br><br><br>
-		</fieldset>
+		</form>
 	</div>
 </div>
 <br class="clear" />
@@ -261,8 +261,9 @@
 </div>
 
 <div id="footer"><div class="inner">
-	<p><span class="credits">&copy; 2010 Your Name / <a href="#">Site title</a> | <a href="#">Sample footer link 1</a> | <a href="#">Sample footer link 2</a></span><br />
-	<a href="http://andreasviklund.com/templates/variant-classic/" title="Variant Classic template">Template design</a> by <a href="http://andreasviklund.com/" title="Andreas Viklund">Andreas Viklund</a></p>
+	<p><span class="credits">&copy; 2014 <a href="#">Dr.G.Kumaran Ayurvedic Clinic</a> | Powered By <a href="http://cnsiva.com"><b>www.CnSiva.com</b></a>
+	| Developed By <a href="http://cnsiva.com"><b>S Pandian</b></a> and <a href="http://cnsiva.com"><b>Cn Siva</b></a>
+	</span></p>
 </div></div>
 
 </body>
