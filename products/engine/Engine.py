@@ -13,14 +13,19 @@ class CodeInfo(object):
         self.fs_found_patient_template = """
         <fieldset><legend>&nbsp;&nbsp;FOUND PATIENTS&nbsp;&nbsp;</legend>
         <br>
-            <form name="lookup" action="/engine/search/patient" method="post">
-                <select size=8 style="width: 320px;  border: none;">
-                    %(option_values_found_patients)s
-                </select>
-                    <p align=center><br><br>
-                        <input type="submit" name="load" value="Look Up"></input>
-                    </p>
-            </form>
+            <table border=0>
+                <tr>
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
+                        <select name="load_patient" id="load_patient" size=8 style="width: 300px;  border: none;">
+                            %(option_values_found_patients)s
+                        </select>
+                    </td>
+                </tr>
+            </table>
+                <p align=center><br><br>
+                    <input type="submit" name="load" value="Look Up"></input>
+                </p>
         </fieldset>"""
 
         self.patient_schema = (
@@ -70,28 +75,31 @@ class Engine(CodeInfo):
         self.mapped_dict_to_db = { db_col: default
                                    for (ui_col, db_col), default in self.patient_schema }
 
-    def __call__(self, str_method='', save=False):
+    def __call__(self, str_method='', **kwargs):
         """."""
         try:
             if str_method:
                 func = getattr(self, str_method)
-            self.mapped_dict_to_db.update({ 'save': save })
+            self.mapped_dict_to_db.update( kwargs )
             return func(**self.mapped_dict_to_db)
         except AttributeError:
             return "<h1>Page Not Found</h1>"
 
     def patient(self, **kwargs):
         """."""
+
+        _welcome_msg = ""
+
         save = kwargs.get('save', False)
         if save:
             del kwargs['save']
 
-        search = kwargs.get('search', False)
-        if search:
-            ## ------------------------------------------------------------- ##
-            ## Search for any Patient with the specified identity fields.
-            ## ------------------------------------------------------------- ##
-            del kwargs['search']
+        ## search = kwargs.get('search', False)
+        ## if search:
+        ##     ## ------------------------------------------------------------- ##
+        ##     ## Search for any Patient with the specified identity fields.
+        ##     ## ------------------------------------------------------------- ##
+        ##     del kwargs['search']
 
 
         if not save:
@@ -99,24 +107,36 @@ class Engine(CodeInfo):
             ## Fetch contents from DB and render them.
             ## ------------------------------------------------------------- ##
 
-            max_id = BaseDB().select_by_sql(Patient,
-                      'select id from patient order by id')[-1].id
+            given_patient_id = kwargs.get('patient_id', False)
+
+            ## load patient for given patient id
+            if not given_patient_id:
+                patient_id = BaseDB().select_by_sql(Patient,
+                             'select id from patient order by id')[-1].id
+
+                _welcome_msg = """[ New Patient Created with ID: {0} ]"""
+
+            else:
+                patient_id = given_patient_id
+                _welcome_msg = """[ Details loaded for Patient ID: {0} ]"""
 
             res = BaseDB().select_by_sql(Patient,
-                      'select * from patient where id = {0}'.format(max_id))[0]
+                      'select * from patient where id = {0}'.format(patient_id))[0]
 
             _d = {key: res._vals_[value] for key, value in res._adict_.items()}
 
             params = {ui_col: _d[db_col] for (ui_col, db_col), _ in self.patient_schema}
 
-            _str = """[ New Patient Created with ID: {0} ]"""
-            params['patient_id'] = _str.format(params['patient_id'])
+            params['patient_id'] = _welcome_msg.format(params['patient_id'])
 
             _extra_params = {ui_col: default
                              for (ui_col, db_col), default in self.patient_search_schema}
 
             params.update(self.patient_extra_params)
             params.update(_extra_params)
+
+            ## Update or retain the previous Searched patients
+            params.update( {'search_result': kwargs.get('prev_found_recs', '')} )
 
             return bottle.template('patient.html', **params)
 
@@ -211,8 +231,6 @@ class Search(CodeInfo):
                 WHERE
                     %(where_clause)s"""
 
-        print _temp % ( {'where_clause': sql_where} )
-
         res = BaseDB().select_by_sql( Patient, _temp % ( {'where_clause': sql_where} ) )
 
         self.patient_extra_params['photo_src'] = 'photo_patientId_hash.jpg'
@@ -225,12 +243,13 @@ class Search(CodeInfo):
         _options = []
         _option_temp = """<option value="{}">{}</option>"""
 
-        print res
-
         for eachrec in res:
-            _options.append( _option_temp.format( eachrec.id, str(eachrec.id) +' '+ eachrec.first_name ) )
+            _formatted_name = """{} {} {} ({})""".format( eachrec.first_name,
+                                                          eachrec.middle_name,
+                                                          eachrec.last_name,
+                                                          str(eachrec.id) )
 
-        print _options
+            _options.append( _option_temp.format( eachrec.id, _formatted_name ) )
 
         self.patient_extra_params['search_result'] = self.fs_found_patient_template % ({'option_values_found_patients': ' '.join(_options)})
 

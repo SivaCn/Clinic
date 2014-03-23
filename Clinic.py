@@ -19,25 +19,42 @@ def index():
 def hello():
     return '<h1>HELLO WOLRD</h1>'
 
+## Load any Fresh Template
 @bottle.route('/engine/fresh/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     engine = Engine.Fresh()
     return engine(subpage)
 
+## Get any generic template/webpage
 @bottle.route('/engine/get/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     engine = Engine.Engine()
     return engine(subpage)
 
+## Make post to the Server (Fresh Create Modules embedded here)
 @bottle.route('/engine/post/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     engine = Engine.Engine()
     return engine(subpage, save=True)
 
+## Search Records any in general.
 @bottle.route('/engine/search/:subpage', method=['POST', 'GET'])
 def engine(subpage):
     search = Engine.Search()
     return search(subpage)
+
+## Update Records of any, in general.
+@bottle.route('/engine/update/:subpage', method=['POST', 'GET'])
+def engine(subpage):
+    #search = Engine.Search()
+    return """<h1> Called Update Module</h1>"""
+
+@bottle.route('/engine/load/:subpage', method=['POST', 'GET'])
+def engine(subpage):
+    engine = Engine.Engine()
+    _id = bottle.request.params.get('load_patient', 0)
+    _found_records = bottle.request.params.get('search_backup', '')
+    return engine(subpage, patient_id=_id, prev_found_recs=_found_records)
 
 @bottle.route('/hello/:name')
 def hello_name(name):
@@ -122,7 +139,7 @@ def main():
 
     # Start the Bottle webapp
     bottle.debug(True)
-    bottle.run(host='localhost', port=8000, reloader=True)
+    bottle.run(host='0.0.0.0', port=80, reloader=True)
 
 if __name__ == "__main__":
     main()

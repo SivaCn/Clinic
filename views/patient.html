@@ -17,7 +17,6 @@
     $( "#datepicker" ).datepicker();
   });
   </script>
-  
 </head>
 
 <body>
@@ -249,11 +248,14 @@
 					</tr>
 				</table>
 			</fieldset>
-			<div id="sidebar">
-			<br><br>
-			{{ !search_result }}
-			</div>
 		</form>
+			<div id="sidebar">
+				<form name="patient" action="/engine/load/patient" method="post">
+					<input type="hidden" name="search_backup" id="search_backup" size=25 value="{{ search_result }}"></input>
+					<br><br>
+					{{ !search_result }}
+				</form>
+			</div>
 	</div>
 </div>
 <br class="clear" />
