@@ -46,8 +46,8 @@ def engine(subpage):
 ## Update Records of any, in general.
 @bottle.route('/engine/update/:subpage', method=['POST', 'GET'])
 def engine(subpage):
-    #search = Engine.Search()
-    return """<h1> Called Update Module</h1>"""
+    update = Engine.Update()
+    return update(subpage)
 
 @bottle.route('/engine/load/:subpage', method=['POST', 'GET'])
 def engine(subpage):

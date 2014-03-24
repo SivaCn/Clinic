@@ -49,7 +49,7 @@ class Patient(db.Entity):
     telephone = Optional(unicode)
     age = Required(int)
     gender = Required(unicode)
-    dob = Required(unicode)  # time.ctime(time.time()) stripped format only date
+    dob = Required(unicode)
     active = Required(unicode, 1)
     email = Optional(unicode)
     photo = Optional(unicode)

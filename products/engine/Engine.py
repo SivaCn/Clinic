@@ -53,8 +53,8 @@ class CodeInfo(object):
 
         self.patient_search_schema = (
                                      # ((form_field_name, DB_ Col_name), default_value)
+                                       (('search_by_email', 'email'), '-- Email --'),
                                        (('search_by_gname', 'gname'), '-- Guardian Name --'),
-                                       (('search_by_email', 'email'), '-- E Mail --'),
                                        (('search_by_patient_id', 'id'), '-- Patient ID --'),
                                        (('search_by_patient_name', ['first_name',
                                                                     'middle_name',
@@ -62,7 +62,10 @@ class CodeInfo(object):
                                        (('search_result', ''), '')
                                      )
 
-        self.patient_extra_params = {'photo_src': ''
+        self.patient_extra_params = {'photo_src': 'photo_default.jpg',
+                                     'method_name': 'post',
+                                     'main_submit_button': 'Create',
+                                     'msg_with_patient_id': ''
                                      }
 
 
@@ -114,11 +117,16 @@ class Engine(CodeInfo):
                 patient_id = BaseDB().select_by_sql(Patient,
                              'select id from patient order by id')[-1].id
 
-                _welcome_msg = """[ New Patient Created with ID: {0} ]"""
+                _welcome_msg = """<font color="blue">Patient Added Successfully with ID: {0}</font>"""
 
             else:
                 patient_id = given_patient_id
-                _welcome_msg = """[ Details loaded for Patient ID: {0} ]"""
+                _welcome_msg = """<font color="blue"> Details loaded for Patient ID: {0}</font>"""
+
+            if kwargs.get('msg_with_patient_id', ''):
+                self.patient_extra_params['msg_with_patient_id'] = kwargs.get('msg_with_patient_id')
+            else:
+                self.patient_extra_params['msg_with_patient_id'] = _welcome_msg.format( patient_id )
 
             res = BaseDB().select_by_sql(Patient,
                       'select * from patient where id = {0}'.format(patient_id))[0]
@@ -127,10 +135,11 @@ class Engine(CodeInfo):
 
             params = {ui_col: _d[db_col] for (ui_col, db_col), _ in self.patient_schema}
 
-            params['patient_id'] = _welcome_msg.format(params['patient_id'])
-
             _extra_params = {ui_col: default
                              for (ui_col, db_col), default in self.patient_search_schema}
+
+            self.patient_extra_params['main_submit_button'] = 'Update'
+            self.patient_extra_params['method_name'] = 'update'
 
             params.update(self.patient_extra_params)
             params.update(_extra_params)
@@ -161,7 +170,6 @@ class Engine(CodeInfo):
 
             _params.update(_extra_params)
 
-            BaseDB().insert(Patient, **_params)
 
             ## Render back the inserted data.
             return self.patient(save=False)
@@ -233,8 +241,6 @@ class Search(CodeInfo):
 
         res = BaseDB().select_by_sql( Patient, _temp % ( {'where_clause': sql_where} ) )
 
-        self.patient_extra_params['photo_src'] = 'photo_patientId_hash.jpg'
-
         self.patient_page_params.update( self.patient_extra_params )
 
         _search_window = {ui_col: default for (ui_col, db_col), default in self.patient_search_schema }
@@ -257,6 +263,52 @@ class Search(CodeInfo):
 
         return bottle.template('patient.html', **self.patient_page_params)
 
+
+class Update(CodeInfo):
+    """Update or overwrite the Records."""
+    def __init__(self):
+        """."""
+        super(Update, self).__init__()
+
+    def __call__(self, str_method, **kwargs):
+        """."""
+        try:
+            if str_method:
+                func = getattr(self, str_method)
+            return func()
+        except AttributeError:
+            return "<h1>Page Not Found</h1>"
+
+    @db_session
+    def patient(self, **kwargs):
+        """."""
+        request_params = bottle.request.params
+        patient_id = request_params.get('hidden_patient_id', 0)
+
+        if patient_id == 0:
+            return "<h1>Invalid Patient ID</h1>"
+
+        _params = {}
+        _extra_params = {'upd_dt': time.ctime(time.time())}
+
+        for req_ui_col, data in request_params.items():
+            _d = { db_col: data
+                   for (ui_col, db_col), default in self.patient_schema
+                   if ui_col == req_ui_col }
+
+            if _d: _params.update(_d)
+
+        _params.update(_extra_params)
+
+        Patient.get(id=int(patient_id)).set(**_params)
+
+        _welcome_msg = """<font color="blue"> Patient Details were updated for ID: {0}</font>"""
+        msg_with_patient_id = _welcome_msg.format( patient_id )
+
+        ## Render back the Updated data.
+        return Engine().patient(patient_id=int(patient_id),
+                                msg_with_patient_id=msg_with_patient_id,
+                                save=False)
 
 class Fresh(CodeInfo):
     """Render the Fresh Template files with necessary population."""

@@ -42,9 +42,10 @@
 
 <div id="wrap"><div class="inner">
 
-<form name="patient" action="/engine/post/patient" method="post">
+<form name="patient" action="/engine/{{ method_name }}/patient" method="post">
+	<input type="hidden" name="hidden_patient_id" id="hidden_patient_id" value="{{ patient_id }}"></input>
 	<div id="content">
-		<h2>Patient Portal {{ patient_id }}</h2>
+		<h2>Patient Portal {{ !msg_with_patient_id }}</h2>
         <br>
 		<div class="clearfix">
 			<table border=0>
@@ -95,8 +96,8 @@
 									<td>
 										<select name="gender" id="gender">
 											<option>--Select--</option>
-											<option value="Male">Male</option>
-											<option value="Female" >Female</option>
+											<option value="Male" {{ "selected" if gender == "Male" else "" }}>Male</option>
+											<option value="Female" {{ "selected" if gender == "Female" else "" }}>Female</option>
 										</select>
 									</td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -125,10 +126,10 @@
 									<td>
 										<select name="maritial_status" id="maritial_status">
 											<option>-- Select --</option>
-											<option>Single</option>
-											<option>Married</option>
-											<option>Divorced</option>
-											<option>Widowed</option>
+											<option value="Single" {{ "selected" if maritial_status == "Single" else "" }}>Single</option>
+											<option value="Married" {{ "selected" if maritial_status == "Married" else "" }}>Married</option>
+											<option value="Divorced" {{ "selected" if maritial_status == "Divorced" else "" }}>Divorced</option>
+											<option value="Widowed" {{ "selected" if maritial_status == "Widowed" else "" }}>Widowed</option>
 										</select>
 									</td>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -142,7 +143,7 @@
 							<table border=0 cellspacing="10">
 								<tr>
 									<td colspan=2>&nbsp;</td>
-									<td colspan=2><img src="{{ photo_src }}" height=150 width=111/></td>
+									<td colspan=2><img src="/{{ photo_src }}" height=150 width=111/></td>
 								</tr>
 								<tr>
 									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -199,7 +200,7 @@
 			</table>
 
 		    <p align=center><br><br>
-		        <input type="submit" name="Save" value="Save"></input>
+		        <input type="submit" name="{{ main_submit_button }}" value="{{ main_submit_button }}"></input>
 		        <input type="button" name="Reset" value="Reset"></input>
 		    </p>
 		</div>
