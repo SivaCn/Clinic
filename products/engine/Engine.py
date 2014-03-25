@@ -170,6 +170,7 @@ class Engine(CodeInfo):
 
             _params.update(_extra_params)
 
+            BaseDB().insert(Patient, **_params)
 
             ## Render back the inserted data.
             return self.patient(save=False)
