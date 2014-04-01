@@ -42,172 +42,90 @@
 
 <div id="wrap"><div class="inner">
 
-<form name="patient" action="/engine/{{ method_name }}/patient" method="post">
-	<input type="hidden" name="hidden_patient_id" id="hidden_patient_id" value="{{ patient_id }}"></input>
+<form name="patient" action="/engine/<start> method_name </start>/patient" method="post">
+
+	<input type="hidden" name="" id="" value=""></input>
+	<input type="hidden" name="" id="" value=""></input>
+	<input type="hidden" name="" id="" value=""></input>
+
 	<div id="content">
-		<h2>Patient Portal {{ !msg_with_patient_id }}</h2>
-        <br>
 		<div class="clearfix">
-			<table border=0>
-				<tr>
-					<td>
-						&nbsp;&nbsp;
-						<!--Dummy for indent-->
-					</td>
-					<td>
-						<fieldset><legend>&nbsp;&nbsp;PERSONAL DETAILS&nbsp;&nbsp;</legend>
-							<table border=0 cellspacing="10">
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>First Name</td>
-									<td><input type="text" name="fname" id="fname" value="{{ fname }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Middle Name</td>
-									<td><input type="text" name="mname" id="mname" value="{{ mname }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Last Name</td>
-									<td><input type="text" name="lname" id="lname" value="{{ lname }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Address</td>
-									<td><textarea name="address" id="address" cols="22" rows="3" style="resize: none;"   >{{ address }}</textarea></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>DOB and Age</td>
-									<td>
-										<input type="text" id="datepicker" size=14 name="dob" value="{{ dob }}">
-										<input type="text" name="age" id="age" size="3" value="{{ age }}"></input>
-									</td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Gender</td>
-									<td>
-										<select name="gender" id="gender">
-											<option>--Select--</option>
-											<option value="Male" {{ "selected" if gender == "Male" else "" }}>Male</option>
-											<option value="Female" {{ "selected" if gender == "Female" else "" }}>Female</option>
-										</select>
-									</td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Religion</td>
-									<td><input type="text" name="religion" id="religion" value="{{ religion }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Country</td>
-									<td><input type="text" name="country" id="country" value="{{ country }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Occupation</td>
-									<td><input type="text" name="occupation" id="occupation" value="{{ occupation }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Maritial Status</td>
-									<td>
-										<select name="maritial_status" id="maritial_status">
-											<option>-- Select --</option>
-											<option value="Single" {{ "selected" if maritial_status == "Single" else "" }}>Single</option>
-											<option value="Married" {{ "selected" if maritial_status == "Married" else "" }}>Married</option>
-											<option value="Divorced" {{ "selected" if maritial_status == "Divorced" else "" }}>Divorced</option>
-											<option value="Widowed" {{ "selected" if maritial_status == "Widowed" else "" }}>Widowed</option>
-										</select>
-									</td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-							</table>
-						</fieldset>
-					</td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>
-						<fieldset><legend>&nbsp;&nbsp;CONTACT DETAILS&nbsp;&nbsp;</legend>
-							<table border=0 cellspacing="10">
-								<tr>
-									<td colspan=2>&nbsp;</td>
-									<td colspan=2><img src="/{{ photo_src }}" height=150 width=111/></td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>E-Mail</td>
-									<td><input type="text" name="email" id="email" value="{{ email }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Mobile</td>
-									<td><input type="text" name="mobile" id="mobile" value="{{ mobile }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Telephone</td>
-									<td><input type="text" name="telephone" id="telephone" value="{{ telephone }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Guardian Name</td>
-									<td><input type="text" name="gname" id="gname" value="{{ gname }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									<td>Guardian Phone</td>
-									<td><input type="text" name="gphone" id="gphone" value="{{ gphone }}"></input></td>
-									<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								</tr>
-								<tr>
-									<td colspan=4>&nbsp;</td>
-								</tr>
-							</table>
-						</fieldset>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan=3>
-						<br>
-						<fieldset><legend>&nbsp;&nbsp;NOTES&nbsp;&nbsp;</legend>
-							<table width=100% border=0 cellspacing="10">
-								<tr>
-									<td>
-										<textarea name="notes" id="notes" cols="100" rows="5" style="resize: none;">{{ notes }}</textarea>
-									</td>
-								</tr>
-							</table>
-						</fieldset>
-					</td>
-				</tr>
-			</table>
 
-		    <p align=center><br><br>
-		        <input type="submit" name="{{ main_submit_button }}" value="{{ main_submit_button }}"></input>
-		        <input type="button" name="Reset" value="Reset"></input>
-		    </p>
+			<fieldset><legend>&nbsp;&nbsp;GENERAL DETAILS&nbsp;&nbsp;</legend>
+				<table border=0 width="100%" cellspacing="10">
+					<tr>
+						<td style="text-align: right">last Visit</td>
+						<td><input type="text" name="" id="" value="" size="10"></input></td>
+						<td style="text-align: right">Next Visit</td>
+						<td><input type="text" name="" id="" value="" size="10"></input></td>
+						<td style="text-align: right">Problem Area</td>
+						<td><input type="text" name="" id="" value="" size="10"></input></td>
+					</tr>
+
+					<tr>
+						<td style="text-align: right">Food</td>
+						<td><input type="text" name="" id="" value="" size="10"></input></td>
+						<td style="text-align: right">Pathiyas</td>
+						<td><input type="text" name="" id="" value="" size="10"></input></td>
+						<td style="text-align: right">Sleep</td>
+						<td><input type="text" name="" id="" value="" size="10"></input></td>
+					</tr>
+				</table>
+			</fieldset>
+
+			<br><br>
+			
+			<fieldset><legend>&nbsp;&nbsp;DESCRIPTIONS&nbsp;&nbsp;</legend>
+				<table border=0 width="100%" cellspacing="10">
+					<tr>
+						<td>
+							<!-- Inner Table For Sub fields -->
+							<table border=0 width="100%" cellspacing="10">
+								<tr>
+									<td style="text-align: right">Complaints</td>
+									<td><textarea name="" id="" cols="35" rows="3" style="resize: none;"></textarea></td>
+									<td style="text-align: right">Signs & Symptoms</td>
+									<td><textarea name="" id="" cols="35" rows="3" style="resize: none;"></textarea></td>
+								</tr>
+								<tr>
+									<td style="text-align: right">Treatment Details</td>
+									<td><textarea name="" id="" cols="35" rows="3" style="resize: none;"></textarea></td>
+									<td style="text-align: right">Improvements</td>
+									<td><textarea name="" id="" cols="35" rows="3" style="resize: none;"></textarea></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+
+			<br><br>
+
+			<fieldset><legend>&nbsp;&nbsp;NOTES&nbsp;&nbsp;</legend>
+				<table width=100% border=0 cellspacing="10">
+					<tr>
+						<td>
+							<textarea name="" id="" cols="105" rows="5" style="resize: none;"></textarea>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+
+			<br><br>
+
+			<p align="center">
+				<input type="submit" name="submit" value="Save"></input> &nbsp;&nbsp;
+				<input type="button" name="reset" value="Reset"></input> &nbsp;&nbsp;
+				<input type="button" name="close_record" value="Close Record"></input> &nbsp;&nbsp;
+				<input type="button" name="associated" value="get Associates"></input>
+			</p>
+
 		</div>
-		<br><br>
-
 	</div>
+
 </form>
+
+
 	<div id="sidebar">
 	<p><img src="/sample-logo.jpg" alt="Sample sidebar logo" height="100%" width="100%" /></p>
 
@@ -216,25 +134,25 @@
 					<table width=100% border=0 cellspacing="5">
 					<tr>
 						<td>
-							<input type="text" name="search_by_patient_name" id="search_by_patient_name" size=25 value="{{ search_by_patient_name }}"></input>
+							<input type="text" name="search_by_patient_name" id="search_by_patient_name" size=25 value="<start> search_by_patient_name </start>"></input>
 						</td>
 						<td> OR</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="search_by_patient_id" id="search_by_patient_id" size=25 value="{{ search_by_patient_id }}"></input>
+							<input type="text" name="search_by_patient_id" id="search_by_patient_id" size=25 value="<start> search_by_patient_id </start>"></input>
 						</td>
 						<td> OR</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="search_by_email" id="search_by_email" size=25 value="{{ search_by_email }}"></input>
+							<input type="text" name="search_by_email" id="search_by_email" size=25 value="<start> search_by_email </start>"></input>
 						</td>
 						<td> OR</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="text" name="search_by_gname" id="search_by_gname" size=25 value="{{ search_by_gname }}"></input>
+							<input type="text" name="search_by_gname" id="search_by_gname" size=25 value="<start> search_by_gname </start>"></input>
 						</td>
 					</tr>
 					<tr>
@@ -252,9 +170,9 @@
 		</form>
 			<div id="sidebar">
 				<form name="patient" action="/engine/load/patient" method="post">
-					<input type="hidden" name="search_backup" id="search_backup" size=25 value="{{ search_result }}"></input>
+					<input type="hidden" name="search_backup" id="search_backup" size=25 value="<start> search_result </start>"></input>
 					<br><br>
-					{{ !search_result }}
+					<start> !search_result </start>
 				</form>
 			</div>
 	</div>

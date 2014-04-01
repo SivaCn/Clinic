@@ -13,7 +13,9 @@ from products.engine import Engine
 def index():
     #return '<a href="/hello">Go to Hello World page</a>'
     #return bottle.template('first.html', name='AAAAAAAAAA')
-    return bottle.redirect('/engine/fresh/patient')
+    ## return bottle.redirect('/engine/fresh/patient')
+    ## return bottle.template('medical.html')
+    return bottle.template('login.html')
 
 @bottle.route('/hello')
 def hello():
